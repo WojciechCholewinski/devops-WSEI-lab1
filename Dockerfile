@@ -7,8 +7,8 @@ WORKDIR /app
 # Kopiowanie pliku hello.py do katalogu /app w kontenerze
 COPY hello.py /app/
 
-# Przejście do katalogu roboczego
-WORKDIR /app
+# Instalacja redisa
+RUN pip install redis
 
 # Komenda uruchamiająca skrypt Pythona
 CMD ["python", "hello.py"]
