@@ -38,14 +38,18 @@ jobs:
       - name: Install dependencies
         run: pip install redis
 
-      - name: Wait for Redis to be ready
+      - name: Debug - List running services
+        run: docker ps -a
+
+      - name: Debug - Check Redis connectivity
         run: |
           for i in {1..10}; do
-            if echo PING | nc -w 1 redis 6379; then
-              echo "Redis is ready!"
-              exit 0
-            fi
-            echo "Waiting for Redis..."
+              echo "Checking Redis connection..."
+              if docker run --rm --network=host redis redis-cli -h 127.0.0.1 ping; then
+            echo "Redis is responding!"
+            exit 0
+          fi
+          echo "Redis not ready, retrying..."
             sleep 2
           done
           echo "Redis did not start in time"
