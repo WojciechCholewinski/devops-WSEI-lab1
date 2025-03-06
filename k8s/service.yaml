@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app-service
+spec:
+  selector:
+    app: python-app
+  ports:
+    - protocol: TCP
+      port: 80          # Port dostępny dla użytkowników
+      targetPort: 5000  # Port aplikacji w kontenerze
+      nodePort: 30007
+  type: NodePort        # Umożliwia mi dostęp do aplikacji spoza klastra
