@@ -55,5 +55,7 @@ jobs:
           echo "Redis did not start in time"
           exit 1
 
-      - name: Run application test
-        run: python hello.py
+      - name: Run application test in Docker
+        run: |
+          docker run --rm --network=host -v $(pwd):/app -w /app python:3.9 \
+          bash -c "pip install redis && python hello.py"
